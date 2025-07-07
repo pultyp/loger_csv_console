@@ -1,0 +1,697 @@
+login as: lis
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v22.2 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ⮞ SSH session to lis@192.168.1.11                                    │
+    │   • Direct SSH      :  ✓                                             │
+    │   • SSH compression :  ✓                                             │
+    │   • SSH-browser     :  ✓                                             │
+    │   • X11-forwarding  :  ✓  (remote display is forwarded through SSH)  │
+    │                                                                      │
+    │ ⮞ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-142-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Jun 27 11:43:12 AM UTC 2025
+
+  System load:  0.38               Temperature:             53.0 C
+  Usage of /:   21.0% of 97.87GB   Processes:               233
+  Memory usage: 3%                 Users logged in:         2
+  Swap usage:   0%                 IPv4 address for enp3s0: 192.168.1.11
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+38 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+13 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+New release '24.04.2 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Fri Jun 27 11:41:47 2025 from 192.168.1.29
+lis@bs-isp4-01:~$ sudo su
+[sudo] password for lis:
+root@bs-isp4-01:/home/lis#
+root@bs-isp4-01:/home/lis#
+root@bs-isp4-01:/home/lis# service lte restart
+root@bs-isp4-01:/home/lis# screen -x
+There are several suitable screens on:
+        64925.lte       (06/27/2025 11:43:28 AM)        (Detached)
+        5049.iperf3     (06/27/2025 09:12:43 AM)        (Attached)
+Type "screen [-d] -r [pid.]tty.host" to resume one of them.
+root@bs-isp4-01:/home/lis# screen -x lte
+
+
+
+
+
+
+
+
+
+
+
+
+root@bs-isp4-01:/usr/LAD-SPO/mme#
+root@bs-isp4-01:/usr/LAD-SPO/mme# cd /usr/LAD-SPO/mme
+root@bs-isp4-01:/usr/LAD-SPO/mme# /usr/LAD-SPO/lteots-linux-2024-06-14/ltelaunch.sh MME
+Core Network version 2024-06-14, Copyright (C) 2012-2024 Company
+This software is licensed to LiSoftTeam.
+Support and software update available until 2024-06-16.
+
+(mme)
+(mme) log file.rotate=300M,file.path=/var/log/lte/
+(mme)
+(mme) imsconnect
+(mme) ue
+            SUPI           IMEISV  CN M-TMSI/5G-TMSI REG           TAC #BEARER IP_ADDR
+(mme)
+(mme)
+(mme)
+(mme)
+
+
+
+
+
+
+[ bs-isp4-01:root ][                         [0 MME_450]  1 ENB_450  3 IMS_450                          ][ 27/06/25 11:44 ]
+
+
+
+
+
+
+
+
+
+root@bs-isp4-01:/usr/LAD-SPO/enb#
+root@bs-isp4-01:/usr/LAD-SPO/enb# cd /usr/LAD-SPO/enb
+root@bs-isp4-01:/usr/LAD-SPO/enb# /usr/LAD-SPO/lteots-linux-2024-06-14/ltelaunch.sh ENB
+Base Station version 2024-06-14, Copyright (C) 2012-2024 Company
+This software is licensed to LiSoftTeam.
+Support and software update available until 2024-06-16.
+
+TRX driver: initializing LAD driver
+RF0: sample_rate=15.360 MHz dl_freq=464.100 MHz ul_freq=454.100 MHz (band 31) dl_ant=1 ul_ant=1
+Warning, CPU hyperthreading is enabled, we do not recommend using it.
+TRX driver: initializing rx tx threads
+tx ch = 1
+rx ch = 1
+TRX driver: using trx preset: "SISO 15.36 LTE10"
+tee: 'standard output'd = 0x00018093 - 0x00938001
+: Resource temporarily unavailable
+d = 0x00018092 - 0x00928001
+d = 0x001001f4 - 0x00f40110
+d = 0x00018001 - 0x00018001
+ad9361_init : AD936x Rev 2 successfully initialized
+TRX driver: TX ch 0 gain set 71.000
+TRX driver: RX ch 0 gain set to 2
+TRX driver: ready
+(enb)
+(enb) log file.rotate=300M,file.path=/var/log/lte/
+(enb)
+(enb)
+(enb)
+(enb) t
+Press [return] to stop the trace
+
+(enb)
+(enb)
+(enb)
+(enb) rf_info
+
+TRX API version 15
+ Chan Port Gain(dB)   Freq(MHz)
+  TX0    0     71.0  464.100000
+  RX0    0      2.0  454.100000
+TX underflows=0 RX overflows=0
+(enb)
+(enb)
+(enb) rx_gain 20
+TRX driver: RX ch 0 gain set to 20
+(enb)
+(enb)
+(enb) t
+Press [return] to stop the trace
+
+(enb)
+(enb)
+(enb)
+(enb) rx_gain 40
+TRX driver: RX ch 0 gain set to 40
+(enb)
+(enb)
+(enb) t
+Press [return] to stop the trace
+PRACH: cell=01 seq=12 ta=142 snr=28.9 dB
+PRACH: cell=01 seq=15 ta=142 snr=28.3 dB
+PRACH: cell=01 seq=6 ta=142 snr=28.4 dB
+PRACH: cell=01 seq=34 ta=142 snr=28.9 dB
+PRACH: cell=01 seq=51 ta=142 snr=28.4 dB
+PRACH: cell=01 seq=37 ta=142 snr=28.6 dB
+PRACH: cell=01 seq=38 ta=142 snr=28.3 dB
+PRACH: cell=01 seq=21 ta=142 snr=28.8 dB
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+    8 001 0044 1   3  1    -    0    0     0 1  0.0    -   -    -    1    0     0  8/8.0/8   -   -    -
+    1 001 003d [stopped]
+PRACH: cell=01 seq=29 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=20 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=11 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=2 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=2 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=45 ta=142 snr=29.0 dB
+PRACH: cell=01 seq=44 ta=142 snr=29.0 dB
+PRACH: cell=01 seq=35 ta=142 snr=29.0 dB
+PRACH: cell=01 seq=8 ta=142 snr=29.0 dB
+    1 001 003d [stopped]
+PRACH: cell=01 seq=20 ta=142 snr=28.0 dB
+PRACH: cell=01 seq=31 ta=142 snr=29.0 dB
+   19 001 004f 1   6  1  5.0    7   10   856 1 26.4 18.9 1.0 14.0    5    6 2.54k  1/4.2/8 -22  40  0.0
+    1 001 003d [stopped]
+   19 001 004f 1   6  1  4.4    9   14 1.54k 1 26.6  9.5 1.0 15.4    0    7 3.66k  1/1.0/1 -17  39  0.0
+    1 001 003d [stopped]
+   19 001 004f 1   6  1  4.2   12   42 10.9k 1 24.4  7.5 1.0 18.5   25   27 19.6k  1/4.4/8   3  40  0.0
+    1 001 003d [stopped]
+   19 001 004f 1   7  1  4.5    8   15 3.27k 1 21.8  9.1 1.0 20.7   10    9 12.2k  1/4.8/8   3  40  0.1
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.9   53   87 33.6k 1 26.9  9.4 1.0 20.9   35   28 37.5k  1/5.0/8   2  39  0.1
+   19 001 004f 1   6  1  3.9    5   14 2.06k 1 23.4  7.7 1.0 19.7    5   12 9.58k  1/3.2/8   4  40  0.1
+   19 001 004f 1   6  1  3.8    7    7   500 1 21.8  8.7 1.0 20.0    2    3 1.93k  1/3.8/8   2  41  0.1
+   19 001 004f 1   6  1  3.3   11   10 1.83k 1 22.7  9.0 1.0 20.9   23    6 4.15k  1/6.7/8  -2  41  0.2
+PRACH: cell=01 seq=49 ta=142 snr=28.6 dB
+PRACH: cell=01 seq=45 ta=142 snr=28.6 dB
+PRACH: cell=01 seq=2 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=22 ta=142 snr=28.7 dB
+   23 001 0053 1   3  1    -    0    0     0 1  0.0    -   -    -    0    0     0        -   -   -    -
+   22 001 0052 1   3  1    -    0    0     0 1  0.0    -   -    -    3    0     0  8/8.0/8   -   -    -
+   19 001 004f 1  15  1  3.7  139  102 38.3k 1 23.0 10.8 1.0 18.8  173   35 42.5k  1/6.9/8   2  42  0.2
+PRACH: cell=01 seq=13 ta=142 snr=28.7 dB
+PRACH: cell=01 seq=51 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=37 ta=142 snr=29.0 dB
+   19 001 004f 1   6  1  4.1   71   43 8.35k 1 25.8  8.4 1.0 14.4  259   46 38.8k  1/7.0/8 -23  41  0.3
+   19 001 004f 1   6  1  4.9  443  600  352k 1 19.1  8.0 1.0 14.0  264  122  124k  1/5.8/8  -5  39  0.3
+PRACH: cell=01 seq=23 ta=142 snr=29.0 dB
+PRACH: cell=01 seq=23 ta=142 snr=29.0 dB
+   19 001 004f 1   7  1  5.1  217  331  180k 1 25.4  8.8 1.0 15.3  245   87 85.3k  1/6.2/8  -1  40  0.3
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  4.4   24   49 22.1k 1 25.3  8.3 1.0 16.1   30   15 16.8k  1/5.7/8  -5  39  0.3
+   19 001 004f 1   6  1  3.2    8    9 1.06k 1 20.4  7.8 1.0 19.3    0    6 3.07k  1/1.2/2  -2  39  0.2
+   19 001 004f 1   7  1  4.2   25   21 4.21k 1 23.8  7.9 1.0 14.2   80   36 40.7k  1/5.8/8   2  40  0.4
+   19 001 004f 1   6  1  4.5    0    4   128 1 23.8  7.2   -    -    0    0     0        -   2  40    -
+   19 001 004f 1   3  1  1.5    2    4    56 1 23.8 11.0   -    -    0    0     0        -   2  40    -
+   19 001 004f 1   0  1  2.2    3    4    68 1 23.8  6.6   -    -    0    0     0        -   2  40    -
+   19 001 004f 1   6  1  2.1    3    8   376 1 24.1  7.1 1.0 16.0    5    3 1.70k  1/5.4/8   5  39  0.3
+   19 001 004f 1   6  1  3.5    7    4    96 1 24.1  7.6   -    -    0    0     0        -   5  39    -
+   19 001 004f 1   6  1  3.1    2    8   632 1 22.8  7.9 1.0 17.0    0    2 1.28k  1/1.0/1   2  39  0.4
+   19 001 004f 1   6  1  3.3    7   14 1.84k 1 21.8  6.2 1.0 16.5   10   11 8.14k  1/4.3/8   4  40  0.4
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.4    1    5   116 1 23.1  5.9 1.0 15.0    0    1   564  1/1.0/1   2  40  0.3
+   19 001 004f 1   6  1  2.9    2    8   624 1 22.0  7.0 1.0 16.0    0    3 1.82k  1/1.0/1   5  40  0.4
+   19 001 004f 1   6  1  3.0    1    4    80 1 22.0  6.9   -    -    0    0     0        -   5  40    -
+   19 001 004f 1   6  1  3.4    0    5   116 1 22.1  6.1 1.0 15.0    0    1   564  1/1.0/1   4  40  0.4
+   19 001 004f 1   6  1  3.2    6    8   896 1 23.4  6.9 1.0 16.0   10    4 2.17k  1/6.0/8   0  39  0.4
+   19 001 004f 1   6  1  4.4  106  149 68.8k 1 18.9  7.8 1.0 14.5   84   65 66.4k  1/5.0/8   1  40  0.5
+   19 001 004f 1   6  1  3.1    3   11 1.17k 1 23.8  8.6 1.0 16.1    5    6 3.54k  1/4.2/8   3  40 -0.1
+   19 001 004f 1   6  1  3.4    4    7   524 1 23.6  8.1 1.0 16.2    5    3 1.86k  1/5.4/8   5  39 -0.4
+   19 001 004f 1   6  1  3.3    5    7   796 1 22.3  8.2 1.0 16.7    0    3 1.42k  1/1.0/1   1  39 -0.2
+   19 001 004f 1   6  1  3.5    0    4    96 1 22.3  7.0   -    -    0    0     0        -   1  39    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.0    2    4    80 1 22.3  7.8   -    -    0    0     0        -   1  39    -
+   19 001 004f 1   6  1  3.1    4    8   572 1 22.9  8.2 1.0 16.0    0    4 2.12k  1/1.0/1   4  39 -0.3
+   19 001 004f 1   6  1  3.8    2    5   380 1 23.2  7.0 1.0 15.5    0    2 1.17k  1/1.0/1   4  39 -0.3
+   19 001 004f 1   6  1  3.5    4    4    96 1 23.2  7.6   -    -    0    0     0        -   4  39    -
+   19 001 004f 1   6  1  3.0    3   11 1.27k 1 24.0  6.7 1.0 16.5    0    4 2.49k  1/1.0/1   3  40 -0.3
+   19 001 004f 1   6  1  3.9   25   53 17.6k 1 25.2  7.5 1.0 15.3   25   24 18.8k  1/4.6/8   0  39 -0.2
+   19 001 004f 1   6  1  3.3    1    6   368 1 26.3  6.7 1.0 15.5    0    2 1.08k  1/1.0/1   0  40 -0.2
+   19 001 004f 1   6  1  4.0    1    4   112 1 26.3  7.5   -    -    0    0     0        -   0  40    -
+   19 001 004f 1   6  1  3.4    5    9   604 1 25.0  8.2 1.0 18.8    0    4 2.41k  1/1.2/2   3  39 -0.2
+   19 001 004f 1   6  1  3.0    2    4    80 1 25.0  7.8   -    -    0    0     0        -   3  39    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.2    6    5   284 1 27.9  7.7 1.0 18.0    5    1   532  1/6.8/8   4  38 -0.1
+   19 001 004f 1   6  1  3.5    4    8   576 1 24.4  8.2 1.0 19.0    0    3 1.93k  1/1.0/1   1  38 -0.2
+   19 001 004f 1   6  1  3.0    5    7   540 1 23.7  7.6 1.0 17.3    0    3 1.67k  1/1.0/1   4  39 -0.2
+   19 001 004f 1   6  1  3.5    2    4    96 1 23.7  8.0   -    -    0    0     0        -   4  39    -
+   19 001 004f 1   6  1  3.0    0    4    80 1 23.7  8.3   -    -    0    0     0        -   4  39    -
+   19 001 004f 1   6  1  3.2    4    8   816 1 21.8  7.7 1.0 16.2    0    4 2.48k  1/1.0/1   5  39 -0.2
+   19 001 004f 1   6  1  3.2    1    5   108 1 25.2  7.1 1.0 15.0    5    1   564  1/6.8/8   4  38 -0.1
+   19 001 004f 1   6  1  3.3    1    6   368 1 23.9  8.0 1.0 18.7    5    2 1.17k  1/6.0/8   3  38 -0.1
+   19 001 004f 1   6  1  3.5    2    8   648 1 21.1  8.3 1.0 18.7   10    4 2.51k  1/6.0/8   0  39 -0.2
+   19 001 004f 1   6  1  3.5    3    4    96 1 21.1  8.0   -    -    0    0     0        -   0  39    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.0    3    4    80 1 21.1  7.9   -    -    0    0     0        -   0  39    -
+   19 001 004f 1   6  1  3.5    2    4    96 1 21.1  7.7   -    -    0    0     0        -   0  39    -
+   19 001 004f 1   6  1  3.0    4    7   544 1 25.8  7.0 1.0 13.5    0    2 1.06k  1/1.0/1  -6  39 -0.2
+   19 001 004f 1   6  1  3.0    3    4    80 1 25.8  7.7   -    -    0    0     0        -  -6  39    -
+   19 001 004f 1   6  1  3.2    1    6   344 1 25.1  8.2 1.0 21.5    0    2 1.38k  1/1.5/2  -1  39 -0.2
+   19 001 004f 1   6  1  3.5    0    4    96 1 25.1  8.5   -    -    0    0     0        -  -1  39    -
+   19 001 004f 1   5  1  3.5    1    4    96 1 25.1  7.1   -    -    0    0     0        -  -1  39    -
+   19 001 004f 1   6  1  3.1    3    7   556 1 23.7  7.5 1.0 19.0    0    2 1.17k  1/1.0/1   2  39 -0.1
+   19 001 004f 1   6  1  3.5    4    4    96 1 23.7  7.6   -    -    0    0     0        -   2  39    -
+   19 001 004f 1   6  1  3.0    0    4    80 1 23.7  8.5   -    -    0    0     0        -   2  39    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.5    4    4    96 1 23.7  8.5   -    -    0    0     0        -   2  39    -
+   19 001 004f 1   6  1  3.0    1    4    80 1 23.7  7.8   -    -    0    0     0        -   2  39    -
+   19 001 004f 1   6  1  3.5    6   10 1.09k 1 24.3  7.8 1.0 16.5    0    6 3.23k  1/1.0/1   5  39 -0.1
+   19 001 004f 1   5  1  3.5    2    4    96 1 24.3  7.5   -    -    0    0     0        -   5  39    -
+   19 001 004f 1   6  1  3.5    0    6   360 1 23.4  7.8 1.0 16.0    0    2 1.03k  1/1.0/1   4  40 -0.2
+   19 001 004f 1   6  1  3.0    2    4    80 1 23.4  8.6   -    -    0    0     0        -   4  40    -
+   19 001 004f 1   6  1  3.5    3    4    96 1 23.4 10.3   -    -    0    0     0        -   4  40    -
+   19 001 004f 1   6  1  3.4    2    7   572 1 21.6 10.3 1.0 17.0    0    2 1.28k  1/1.0/1   3  40 -0.2
+   19 001 004f 1   6  1  3.0    2    6   616 1 22.9  7.8 1.0 15.0    0    1   564  1/1.0/1   4  40 -0.2
+   19 001 004f 1   6  1  3.5    4    4    96 1 22.9  8.1   -    -    0    0     0        -   4  40    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.4    1    8   624 1 23.3  8.7 1.0 17.6    5    4 2.48k  1/4.9/8   2  39 -0.2
+   19 001 004f 1   5  1  4.1  288  530  274k 1 16.3  7.4 1.0 12.7   10   41 20.7k  1/2.4/8  -1  40 -0.2
+   19 001 004f 1   6  1  4.1  717 1245  667k 1 16.4  4.7 1.0 11.8   32   55 28.4k  1/3.6/8   2  40 -0.2
+   19 001 004f 1   6  1  3.8  583  919  456k 1 20.5  8.2 1.0 10.5   33   47 25.3k  1/3.9/8   2  40 -0.2
+   19 001 004f 1   6  1  2.7    2    7   332 1 23.3  8.7 1.0 16.0    0    2 1.03k  1/1.0/1   4  39 -0.2
+   19 001 004f 1   6  1  2.5    4    4    72 1 23.3  8.8   -    -    0    0     0        -   4  39    -
+   19 001 004f 1   6  1  3.0    0    4    80 1 23.3  7.1   -    -    0    0     0        -   4  39    -
+   19 001 004f 1   6  1  3.4    5   10   840 1 22.5  7.4 1.0 15.8    0    5 2.99k  1/1.0/1   5  39 -0.2
+   19 001 004f 1   6  1  3.0    4    6   464 1 23.1  6.7 1.0 16.5    0    2 1.25k  1/1.0/1   4  39 -0.2
+   19 001 004f 1   5  1  3.2    4    6   448 1 21.7  7.6 1.0 16.0    0    2 1.20k  1/1.0/1   6  39 -0.2
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  2.2    2    4    68 1 21.7  8.5   -    -    0    0     0        -   6  39    -
+   19 001 004f 1   6  1  2.5    0    4    72 1 21.7  7.6   -    -    0    0     0        -   6  39    -
+   19 001 004f 1   6  1  3.8    4    8   752 1 24.9  7.0 1.0 16.4   10    3 1.66k  1/6.4/8   3  38 -0.3
+   19 001 004f 1   6  1  3.5    1    4    96 1 24.9  8.1   -    -    0    0     0        -   3  38    -
+   19 001 004f 1   6  1  3.0    1    4    80 1 24.9  8.4   -    -    0    0     0        -   3  38    -
+   19 001 004f 1   6  1  2.8    9    9   788 1 22.5  7.9 1.0 18.0    0    3 1.75k  1/1.0/1   2  38 -0.3
+   19 001 004f 1   6  1  2.6    0    5   268 1 24.2  8.1 1.0 16.0    0    1   612  1/1.0/1   2  39 -0.3
+   19 001 004f 1   5  1  2.3    5    6   324 1 21.3  9.4 1.0 16.5    0    2 1.09k  1/1.0/1   5  39 -0.3
+   19 001 004f 1   5  1  3.0    0    4    80 1 21.3  8.4   -    -    0    0     0        -   5  39    -
+   19 001 004f 1   6  1  3.0    2    4    80 1 21.3  8.4   -    -    0    0     0        -   5  39    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   19 001 004f 1   6  1  3.0    2    4    80 1 21.3  8.6   -    -    0    0     0        -   5  39    -
+   19 001 004f 1   6  1  3.0    0    4    80 1 21.3  8.8   -    -    0    0     0        -   5  39    -
+PRACH: cell=01 seq=1 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=41 ta=142 snr=28.3 dB
+PRACH: cell=01 seq=32 ta=142 snr=28.4 dB
+PRACH: cell=01 seq=25 ta=143 snr=29.0 dB
+   29 001 0059 1   6  1  4.1   32   27 2.29k 1 23.2 14.3 1.0 18.2  138    7 2.59k  1/7.7/8 -18  39  0.5
+PRACH: cell=01 seq=19 ta=142 snr=28.5 dB
+PRACH: cell=01 seq=10 ta=142 snr=28.6 dB
+PRACH: cell=01 seq=6 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=46 ta=142 snr=28.6 dB
+PRACH: cell=01 seq=35 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=23 ta=142 snr=28.7 dB
+PRACH: cell=01 seq=21 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=35 ta=143 snr=28.2 dB
+PRACH: cell=01 seq=30 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=18 ta=143 snr=28.4 dB
+   42 001 0066 1   3  1    -    0    0     0 1  0.0    -   -    -    5    0     0  8/8.0/8   -   -    -
+   29 001 0059 1   7  1  3.3   33   27 6.37k 1 24.9 12.4 1.0 17.9  248    2 1.19k  1/7.9/8 -23  38 -0.3
+PRACH: cell=01 seq=27 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=0 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=45 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=35 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=50 ta=142 snr=28.3 dB
+PRACH: cell=01 seq=41 ta=142 snr=28.3 dB
+   29 001 0059 1   6  1  4.0  119   35 3.53k 1 20.8 12.3 1.0 16.4  261    9 3.94k  1/7.8/8 -17  39  0.4
+PRACH: cell=01 seq=22 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=12 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=6 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=46 ta=142 snr=28.1 dB
+PRACH: cell=01 seq=17 ta=143 snr=28.6 dB
+   29 001 0059 1   6  1  4.2  185  185 90.0k 1 25.0 29.5 1.0 15.4  287   36 39.0k  1/7.2/8 -23  39 -0.2
+   29 001 0059 1   6  1  5.5    8    4   140 1 25.5 24.0 1.0 19.0   19    1   580  1/7.7/8 -23  39 -0.2
+PRACH: cell=01 seq=26 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=17 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=20 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=4 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=5 ta=142 snr=28.2 dB
+PRACH: cell=01 seq=40 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=29 ta=143 snr=28.8 dB
+   29 001 0059 1   6  1  4.2   35   28 2.13k 1 22.1 26.2 1.0 18.6  220    4 1.24k  1/7.9/8 -23  39  0.3
+PRACH: cell=01 seq=15 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=6 ta=143 snr=29.0 dB
+   29 001 0059 1   6  1  5.0   80   79 33.2k 1 25.2  7.8 1.0 15.5  236   29 31.9k  1/7.2/8 -20  40 -0.1
+PRACH: cell=01 seq=25 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=33 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=17 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=49 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=38 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=26 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=15 ta=143 snr=29.0 dB
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   29 001 0059 1   6  1  3.1   83   36 5.43k 1 24.9 23.2 1.0 17.7  204   18 17.9k  1/7.4/8 -23  39 -0.2
+   29 001 0059 1   6  1  3.8    2    5   132 1 25.3 19.5 1.0 19.0   30    1   580  1/7.8/8 -23  39 -0.3
+   29 001 0059 1   6  1  3.5    2    4    96 1 25.3 19.5   -    -    0    0     0        - -23  39    -
+   29 001 0059 1   5  1  3.0    0    4    80 1 25.3 18.8   -    -    0    0     0        - -23  39    -
+   29 001 0059 1   6  1  3.2    5    8   584 1 25.4  7.9 1.0 19.0    5    3 1.74k  1/5.4/8 -23  40 -0.3
+PRACH: cell=01 seq=39 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=30 ta=143 snr=29.0 dB
+   29 001 0059 1   3  1  2.8    3    6   228 1 29.8 29.0 1.0 19.0  100    2 1.00k  1/7.9/8 -23  40 -0.1
+PRACH: cell=01 seq=50 ta=142 snr=28.0 dB
+PRACH: cell=01 seq=20 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=11 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=2 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=44 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=43 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=39 ta=143 snr=29.1 dB
+   29 001 0059 1   6  1  1.7   90   75 14.8k 1 22.1  7.1 1.0 16.6  253   24 25.0k  1/7.4/8 -23  40 -0.1
+PRACH: cell=01 seq=50 ta=142 snr=28.1 dB
+PRACH: cell=01 seq=41 ta=142 snr=28.1 dB
+PRACH: cell=01 seq=31 ta=143 snr=28.7 dB
+   29 001 0059 1   6  1  5.3   35   26 5.28k 1 22.6 18.6 1.0 14.0  142   15 10.0k  1/7.3/8 -15  39  0.4
+PRACH: cell=01 seq=8 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=51 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=46 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=7 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=16 ta=143 snr=29.0 dB
+   29 001 0059 1   6  1  6.1   56   50 11.9k 1 24.8 21.3 1.0 16.3  243    4 1.24k  1/7.9/8 -23  39 -0.2
+   29 001 0059 1   6  1  3.6    6    9   816 1 26.9 13.5 1.0 17.2   20    1   612  1/7.7/8 -22  39 -0.3
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   29 001 0059 1   6  1  4.4    2   14 2.26k 1 25.0  7.7 1.0 19.0   72    2 1.16k  1/7.8/8 -20  39 -0.3
+   29 001 0059 1   5  1  4.1   13   11 1.88k 1 24.8  8.7 1.0 19.0   30    3 1.74k  1/7.4/8 -20  39 -0.3
+   29 001 0059 1   6  1  3.2    3   10 2.06k 1 24.8  7.1 1.0 19.0   88    1   580  1/7.9/8 -20  39 -0.3
+   29 001 0059 1   6  1  3.8    1    4   104 1 25.5 10.9 1.0 19.0    2    1   580  1/5.7/8 -21  39 -0.3
+   29 001 0059 1   6  1  4.0    7    4   112 1 25.5  7.9   -    -    0    0     0        - -21  39    -
+PRACH: cell=01 seq=44 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=0 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=48 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=26 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=50 ta=142 snr=28.4 dB
+PRACH: cell=01 seq=45 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=34 ta=143 snr=29.1 dB
+   29 001 0059 1   6  1  3.0   38   32 3.80k 1 26.6 24.9 1.0 19.2  159    3 1.53k  1/7.9/8 -23  39 -0.2
+   29 001 0059 1   6  1  7.5    2    4   212 1 26.6 22.9   -    -    0    0     0        - -23  39    -
+   29 001 0059 1   6  1  5.0    3    4   144 1 26.6 19.5   -    -    0    0     0        - -23  39    -
+   29 001 0059 1   6  1  3.8    7    3    68 1 26.6 19.3   -    -    0    0     0        - -23  39    -
+   29 001 0059 1   5  1  5.2    7    4   140 1 26.6 12.5   -    -    0    0     0        - -23  39    -
+PRACH: cell=01 seq=22 ta=143 snr=28.3 dB
+PRACH: cell=01 seq=13 ta=143 snr=28.4 dB
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+   29 001 0059 1   3  1  4.9   20   17 3.00k 1 28.9 30.1 1.0 19.0  105    2   784  1/7.9/8 -23  39 -0.1
+   29 001 0059 1   6  1  4.7    4    6   316 1 26.0 21.7 1.0 18.0    5    1   532  1/6.8/8 -23  39 -0.3
+   29 001 0059 1   6  1  6.7    6    6   480 1 25.3 -10.7 1.0 19.0    0    2 1.16k  1/1.0/1 -21  39 -0.3
+   29 001 0059 1   6  1  5.0    4    4   144 1 25.3 16.7   -    -    0    0     0        - -21  39    -
+PRACH: cell=01 seq=5 ta=142 snr=28.1 dB
+PRACH: cell=01 seq=4 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=34 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=20 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=6 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=1 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=42 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=13 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=51 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=37 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=18 ta=143 snr=28.7 dB
+   29 001 00a6 1  11  1  4.2    7    4   412 1 25.5 23.4 1.0 15.7    5    3 1.12k  1/5.4/8 -20  40 -0.3
+PRACH: cell=01 seq=4 ta=142 snr=28.8 dB
+PRACH: cell=01 seq=8 ta=142 snr=28.9 dB
+PRACH: cell=01 seq=38 ta=143 snr=28.8 dB
+  109 001 00a9 1   6  1  3.7   13   13 1.79k 1 22.2 17.2 1.0 16.5   20    9 4.36k  1/5.8/8 -23  39 -0.6
+  109 001 00a9 1   6  1  3.3    9   16 1.75k 1 26.2  8.0 1.0 19.0   75    7 4.06k  1/7.4/8 -20  40  0.2
+  109 001 00a9 1   6  1  3.5    4   16 1.98k 1 25.5  8.4 1.0 19.0   68    5 2.90k  1/7.5/8 -17  40  0.2
+
+(enb)
+фйперф даулинк
+Unknown command: фйперф
+(enb)
+(enb)
+(enb)
+(enb) t
+Press [return] to stop the trace
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  109 001 00a9 1   4  1    -    0    0     0 1 25.3  8.8   -    -    0    0     0        - -23  39    -
+  109 001 00a9 1   4  1  0.0    2    4    32 1 25.3  8.4   -    -    0    0     0        - -23  39    -
+  109 001 00a9 1   3  1  0.0    2    4    32 1 25.3  8.5   -    -    0    0     0        - -23  39    -
+  109 001 00a9 1   3  1  0.0   10   24 2.06k 1 24.7  7.7 1.0 18.7  120    6 3.02k  1/7.7/8 -23  39  0.4
+  109 001 00a9 1   4  1  0.2  647 1295  269k 1 15.1 13.7 1.0 11.0  178   24 12.1k  1/7.2/8 -23  40  0.5
+  109 001 00a9 1   4  1  0.2  670 1290  250k 1 18.7  7.5 1.0 11.1  172   42 20.9k  1/6.6/8   1  39 -0.3
+  109 001 00a9 1   4  1  0.0  580 1399  266k 1 20.9  6.6 1.0 10.7  125   43 19.4k  1/6.2/8  -4  40 -0.3
+  109 001 00a9 1   4  1  0.4  809 1152  233k 1 17.3  7.8 1.0 10.0  315  116 83.2k  1/6.1/8   1  40 -0.3
+  109 001 00a9 1   4  1  0.1  641 1336  261k 1 18.5  6.9 1.0  9.8  195   67 41.5k  1/6.2/8  -6  40 -0.3
+  109 001 00a9 1   4  1  0.0  636 1302  247k 1 16.9  7.6 1.0 11.8  120   29 15.1k  1/6.6/8   2  40 -0.3
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  109 001 00a9 1   3  1  0.0  591 1384  262k 1 17.3  7.8 1.0 11.2  103   29 13.5k  1/6.5/8  -2  40 -0.3
+  109 001 00a9 1   3  1  0.0  601 1378  261k 1 17.0  9.9 1.0 12.1  147   27 12.2k  1/6.9/8 -10  40 -0.3
+  109 001 00a9 1   3  1  0.0  622 1350  256k 1 17.8  8.3 1.0 11.5  145   25 11.1k  1/7.0/8 -12  40 -0.3
+  109 001 00a9 1   3  1  0.0  627 1347  256k 1 20.1  6.7 1.0 11.3  125   27 12.6k  1/6.8/8  -7  40 -0.3
+  109 001 00a9 1   3  1  0.0  611 1165  220k 1 17.2  7.6 1.0 12.0  155   25 13.2k  1/7.0/8   2  40 -0.3
+PRACH: cell=01 seq=34 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=25 ta=143 snr=29.0 dB
+  109 001 00a9 1   3  1  0.1  430  764  148k 1 26.0  5.7 1.0 14.0  257   10 4.92k  1/7.7/8 -23  40 -0.2
+PRACH: cell=01 seq=45 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=36 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=4 ta=143 snr=28.5 dB
+  109 001 00a9 1   4  1  0.0  508  945  181k 1 17.6  6.9 1.0 11.7  193   27 13.4k  1/7.2/8 -10  40 -0.2
+  109 001 00a9 1   3  1  0.0  624 1352  257k 1 23.5  8.6 1.0  9.9  160   30 13.9k  1/6.9/8  -6  40 -0.2
+  109 001 00a9 1   3  1  0.0   16   47 7.44k 1 26.9  7.1 1.0 17.0    5    6 3.54k  1/4.3/8  -1  39 -0.2
+  109 001 00a9 1   3  1  0.0    4    4    32 1 26.9  8.3   -    -    0    0     0        -  -1  39    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  109 001 00a9 1   3  1  0.0    2    7   252 1 21.8  9.0 1.0 19.0    0    2 1.17k  1/1.0/1   3  39 -0.2
+  109 001 00a9 1   3  1  0.0    2    6   272 1 27.2  7.0 1.0 15.0    5    1   564  1/6.8/8   3  39 -0.2
+  109 001 00a9 1   3  1  0.0    2    4    32 1 27.2  8.3   -    -    0    0     0        -   3  39    -
+  109 001 00a9 1   3  1  0.0    1    4    32 1 27.2 13.3   -    -    0    0     0        -   3  39    -
+  109 001 00a9 1   3  1  0.0    7    7   384 1 25.7  8.6 1.0 19.3   20    2 1.17k  1/7.4/8  -1  39 -0.2
+  109 001 00a9 1   3  1  0.0    3    8   548 1 25.6  8.8 1.0 18.2   15    2 1.11k  1/7.2/8  -3  39 -0.2
+  109 001 00a9 1   3  1  0.0    9   13 1.16k 1 26.1  8.8 1.0 20.4   10    5 2.74k  1/5.9/8  -6  40 -0.1
+  109 001 00a9 1   3  1  0.0    0    4    32 1 26.1  8.4   -    -    0    0     0        -  -6  40    -
+  109 001 00a9 1   3  1  0.0    1    4    32 1 26.1  7.9   -    -    0    0     0        -  -6  40    -
+  109 001 00a9 1   3  1  0.0    6   19 1.42k 1 26.6  8.3 1.0 16.0  105    4 1.89k  1/7.7/8 -21  39 -0.1
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  109 001 00a9 1   2  1  2.4  418  106 14.1k 1 21.2  8.1 1.0 14.1 1194  408  566k  1/6.2/8  -3  40 -0.0
+  109 001 00a9 1   6  1  3.3  310   56 7.92k 1 23.4  7.7 1.0 14.6 1530  363  521k  1/6.7/8   0  39 -0.1
+  109 001 00a9 1   5  1  3.6  367   57 7.69k 1 21.3  8.4 1.0 14.4 1403  500  731k  1/6.2/8  -5  40 -0.1
+  109 001 00a9 1   2  1  2.4  319   60 8.02k 1 21.3  7.9 1.0 14.6 1437  463  683k  1/6.3/8  -3  40 -0.1
+  109 001 00a9 1   2  1  3.4  263   58 7.43k 1 21.1  8.8 1.0 14.6 1498  399  585k  1/6.5/8   0  39 -0.1
+  109 001 00a9 1   6  1  2.7  289   64 8.05k 1 21.1  7.0 1.0 14.3 1450  446  645k  1/6.4/8  -4  40 -0.1
+  109 001 00a9 1  13  1  2.5  320   59 7.74k 1 21.1  8.0 1.0 14.4 1484  411  595k  1/6.5/8   0  40 -0.1
+  109 001 00a9 1  15  1  3.4  247   47 7.51k 1 23.7  7.4 1.0 14.2 1512  382  536k  1/6.6/8  -5  40 -0.1
+  109 001 00a9 1   8  1  3.9  245   36 5.37k 1 20.5 10.2 1.0 14.2 1531  356  498k  1/6.7/8  -3  40 -0.0
+  109 001 00a9 1   3  1  3.0  256   64 9.46k 1 20.6 10.0 1.0 13.8 1449  449  613k  1/6.4/8  -3  40 -0.0
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  109 001 00a9 1  12  1  3.6  286   47 7.86k 1 22.7  9.5 1.0 13.8 1502  393  531k  1/6.6/8  -2  40 -0.0
+  109 001 00a9 1   3  1  2.6  203   65 10.4k 1 25.8  7.8 1.0 13.5  660  229  291k  1/6.2/8  -4  40 -0.0
+  109 001 00a9 1   3  1  0.0    1    8   476 1 24.3 12.5 1.0 19.2   48    2 1.28k  1/7.7/8  -1  40 -0.1
+  109 001 00a9 1   3  1  0.0    2    4    32 1 24.3  9.8 1.0 19.0   42    1   580  1/7.8/8 -23  40 -0.1
+  109 001 00a9 1   3  1  0.0    3    4    32 1 24.3 10.7   -    -    0    0     0        - -23  40    -
+
+(enb)
+(enb)
+(enb)
+rx_gain 50
+TRX driver: RX ch 0 gain set to 50
+(enb)
+(enb)
+(enb)
+(enb) t
+Press [return] to stop the trace
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  122 001 00b6 1   6  1    -    0    0     0 1 24.9  9.4   -    -    0    0     0        - -23  40    -
+  122 001 00b6 1   7  1  4.2    6    5   148 1 25.0  9.9 1.0 19.0    0    1   580  1/1.0/1 -22  38 -0.1
+PRACH: cell=01 seq=51 ta=143 snr=28.3 dB
+PRACH: cell=01 seq=37 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=24 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=14 ta=143 snr=28.6 dB
+  122 001 00b6 1   3  1  2.8   42   27 3.77k 1 25.6 19.7 1.0 19.0  217    3 1.74k  1/7.9/8 -23  35 -0.1
+PRACH: cell=01 seq=7 ta=143 snr=26.6 dB
+PRACH: cell=01 seq=37 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=28 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=31 ta=143 snr=29.1 dB
+  122 001 00b6 1   7  1  3.6   24   12   872 1 26.2 22.1 1.0 19.2   38    2   784  1/7.7/8 -23  35 -0.0
+  122 001 00b6 1   7  1  7.0    3    4   192 1 26.2 16.6   -    -    0    0     0        - -23  35    -
+  122 001 00b6 1   6  1  5.2    1    4   152 1 26.2 14.7   -    -    0    0     0        - -23  35    -
+PRACH: cell=01 seq=13 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=4 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=8 ta=143 snr=29.0 dB
+  122 001 00b6 1   7  1  4.9   34   20 4.12k 1 24.6 16.9 1.0 19.0  139    5 2.90k  1/7.8/8 -23  32 -0.0
+  122 001 00b6 1   7  1  5.8    8    6   464 1 24.9 16.4 1.0 19.0    0    2 1.16k  1/1.0/1 -23  32 -0.1
+  122 001 00b6 1   6  1  3.8    4    4   104 1 24.9 11.7   -    -    0    0     0        - -23  32    -
+  122 001 00b6 1   7  1  2.8    3    4    84 1 24.9 10.1   -    -    0    0     0        - -23  32    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  122 001 00b6 1   6  1  2.7    6    7   312 1 24.6  7.2 1.0 19.0    0    2 1.16k  1/1.0/1 -23  31 -0.1
+  122 001 00b6 1   6  1  4.2    4   13 2.39k 1 24.9  7.6 1.0 19.0   82    1   580  1/7.9/8 -21  31 -0.1
+PRACH: cell=01 seq=23 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=32 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=0 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=30 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=34 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=47 ta=143 snr=28.3 dB
+PRACH: cell=01 seq=4 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=31 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=20 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=8 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=49 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=20 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=33 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=4 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=44 ta=143 snr=29.0 dB
+  122 001 00b6 1   7  1  3.2  108   60 10.2k 1 22.2 18.8 1.0 18.9  250    4 2.58k  1/7.9/8 -23  31 -0.0
+PRACH: cell=01 seq=6 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=44 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=0 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=48 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=21 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=11 ta=143 snr=28.4 dB
+  122 001 00b6 1   6  1  3.6  360  227  105k 1 13.2  7.9 1.0 13.5  320   17 4.89k  1/7.7/8 -23  31 -0.0
+PRACH: cell=01 seq=32 ta=143 snr=28.0 dB
+PRACH: cell=01 seq=18 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=48 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=39 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=34 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=35 ta=143 snr=29.1 dB
+  122 001 00b6 1   7  1  1.6  611  512  161k 1 11.5  9.7 1.0  6.5  242   15 8.08k  1/7.6/8 -23  30 -0.0
+PRACH: cell=01 seq=12 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=51 ta=143 snr=28.3 dB
+PRACH: cell=01 seq=41 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=28 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=6 ta=143 snr=28.3 dB
+  122 001 00b6 1   7  1  3.8  806  574  263k 1 12.0  9.3 1.0  6.3  320   42 7.82k  1/7.2/8 -23  32  0.0
+PRACH: cell=01 seq=38 ta=143 snr=28.0 dB
+PRACH: cell=01 seq=29 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=24 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=38 ta=143 snr=28.2 dB
+PRACH: cell=01 seq=37 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=15 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=2 ta=143 snr=27.7 dB
+  122 001 00b6 1   6  1  3.8  433  277  126k 1 15.6  9.0 1.0  7.4  292   18 2.14k  1/7.6/8 -23  31  0.0
+PRACH: cell=01 seq=27 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=36 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=4 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=42 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=21 ta=143 snr=29.0 dB
+  122 001 00b6 1   3  1  3.0  509  332  135k 1 12.9  7.5 1.0  6.0  311   13 3.77k  1/7.7/8 -23  30  0.0
+PRACH: cell=01 seq=38 ta=143 snr=27.8 dB
+PRACH: cell=01 seq=39 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=17 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=3 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=11 ta=143 snr=28.3 dB
+PRACH: cell=01 seq=35 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=25 ta=143 snr=29.0 dB
+  122 001 00b6 1   1  1  0.3  214  168 29.2k 1 22.9  9.0 1.0 12.3  223    5   960  1/7.8/8 -23  30  0.0
+PRACH: cell=01 seq=24 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=1 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=44 ta=143 snr=29.0 dB
+  122 001 00b6 1   9  1  1.0  617  672  154k 1 16.9  9.0 1.0  7.1  268   32 6.14k  1/7.3/8 -20  31 -0.0
+PRACH: cell=01 seq=21 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=11 ta=143 snr=28.3 dB
+PRACH: cell=01 seq=50 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=23 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=9 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=10 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=38 ta=143 snr=28.3 dB
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  122 001 00b6 1   4  1  0.2  284  301 57.0k 1 13.2  9.7 1.0  6.4  271   13 2.08k  1/7.7/8 -23  30  0.0
+PRACH: cell=01 seq=12 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=50 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=41 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=19 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=47 ta=143 snr=27.8 dB
+PRACH: cell=01 seq=48 ta=143 snr=28.9 dB
+PRACH: cell=01 seq=31 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=47 ta=143 snr=28.2 dB
+PRACH: cell=01 seq=38 ta=143 snr=28.3 dB
+  122 001 00b6 1   3  1  0.6  217  261 52.7k 1 25.4 25.1 1.0 10.4  254    9 2.14k  1/7.8/8 -20  30  0.0
+PRACH: cell=01 seq=20 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=21 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=24 ta=143 snr=28.4 dB
+  122 001 00b6 1   4  1  0.1  422  585  110k 1 13.4  8.2 1.0 14.5  239    3 1.40k  1/7.9/8 -23  30 -0.1
+PRACH: cell=01 seq=11 ta=143 snr=27.7 dB
+PRACH: cell=01 seq=49 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=35 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=36 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=27 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=41 ta=143 snr=28.6 dB
+PRACH: cell=01 seq=27 ta=143 snr=29.1 dB
+  122 001 00b6 1   3  1  0.8  751  748  166k 1 11.8  8.8 1.0  5.5  314   65 6.50k  1/6.8/8 -23  31 -0.0
+PRACH: cell=01 seq=4 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=4 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=25 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=6 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=44 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=35 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=21 ta=143 snr=29.1 dB
+  122 001 00b6 1   3  1  0.2  493  627  118k 1 15.6  9.1 1.0  6.5  271   23 7.27k  1/7.5/8 -23  30 -0.0
+PRACH: cell=01 seq=32 ta=143 snr=28.4 dB
+PRACH: cell=01 seq=23 ta=143 snr=28.5 dB
+PRACH: cell=01 seq=9 ta=143 snr=29.1 dB
+PRACH: cell=01 seq=43 ta=143 snr=29.0 dB
+PRACH: cell=01 seq=29 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=17 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=50 ta=143 snr=28.2 dB
+PRACH: cell=01 seq=38 ta=143 snr=28.1 dB
+PRACH: cell=01 seq=45 ta=143 snr=28.7 dB
+PRACH: cell=01 seq=6 ta=143 snr=28.2 dB
+PRACH: cell=01 seq=2 ta=143 snr=28.1 dB
+  122 001 00b6 1   3  1  0.2  504  390 77.2k 1 13.1 27.0 1.0  5.4  280   13 2.24k  1/7.7/8 -23  30 -0.0
+PRACH: cell=01 seq=42 ta=143 snr=28.2 dB
+PRACH: cell=01 seq=31 ta=143 snr=28.8 dB
+PRACH: cell=01 seq=29 ta=143 snr=27.8 dB
+PRACH: cell=01 seq=1 ta=143 snr=28.3 dB
+  122 001 012f 1   5  1  2.4  638  705  260k 1  8.9  8.4 1.0 15.3   18   46 25.0k  1/3.5/8   8  32 -0.0
+  122 001 012f 1   6  1  3.6  281  306  138k 1 16.8  9.8 1.0 12.1   35   22 11.5k  1/5.4/8   8  33 -0.0
+  122 001 012f 1   6  1  3.5   54   22 3.94k 1 20.5  7.0 1.0 14.8  133   54 69.7k  1/6.2/8   0  31  0.0
+  122 001 012f 1   6  1  4.8  229   14 1.93k 1 21.2  6.9 1.0 12.9 1595  298  365k  1/6.9/8  -4  31  0.1
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  122 001 012f 1  13  1  4.3  290   28 4.73k 1 20.7  7.5 1.0 13.0 1607  287  360k  1/7.0/8   1  30  0.1
+  122 001 012f 1   6  1  4.6  306   22 3.92k 1 20.5  9.9 1.0 12.7 1592  297  355k  1/6.9/8   4  30  0.1
+  122 001 012f 1   9  1  4.0  266   23 4.00k 1 20.4 10.6 1.0 12.8 1573  322  405k  1/6.9/8  -4  30  0.1
+  122 001 012f 1   6  1  3.9  152   16 2.06k 1 20.8 11.1 1.0 12.5 1652  239  280k  1/7.1/8   2  30  0.1
+  122 001 012f 1   1  1  3.1  217   11 1.22k 1 20.3 10.9 1.0 13.1 1630  269  334k  1/7.0/8  -3  30  0.2
+  122 001 012f 1   6  1  2.9  240   13 1.03k 1 16.9 10.7 1.0 12.9 1637  257  320k  1/7.1/8  -1  30  0.2
+  122 001 012f 1   1  1  3.9  178   11 1.52k 1 17.3 11.6 1.0 12.3 1624  260  300k  1/7.1/8  -1  31  0.2
+  122 001 012f 1   6  1  4.7  175   11 1.58k 1 20.4  9.6 1.0 12.3 1685  208  244k  1/7.3/8  -2  30  0.2
+  122 001 012f 1   6  1  4.9  187   16 2.41k 1 20.3  9.0 1.0 12.7 1605  293  361k  1/7.0/8  -2  31  0.2
+  122 001 012f 1   6  1  3.7  211   16 1.84k 1 21.4  6.8 1.0 12.4 1605  292  344k  1/7.0/8   1  31  0.2
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  122 001 012f 1   6  1  3.3  264   27 5.46k 1 19.6  9.5 1.0 12.5 1565  260  304k  1/7.0/8   4  31  0.2
+  122 001 012f 1   6  1  2.6   13    9   848 1 21.1  8.8 1.0 10.4   15    3 1.26k  1/6.8/8   5  30  0.2
+  122 001 012f 1   6  1  3.0    2    4    80 1 21.1  9.5   -    -    0    0     0        -   5  30    -
+  122 001 012f 1   6  1  2.7   25   18 1.77k 1 14.7  6.9 1.0  9.7   10   15 8.12k  1/3.8/8   8  29  0.3
+  122 001 012f 1   6  1  3.0   11    8   160 1 14.8  6.6 1.0  6.0    5    8 4.04k  1/3.7/8   9  29  0.3
+  122 001 012f 1   6  1  3.0    4    5   100 1 13.9  7.6 1.0  7.0    0    1   548  1/1.0/1   8  29  0.4
+  122 001 012f 1   6  1  3.2  103   90 33.2k 1 22.3  7.3 1.0  7.4   65   31 15.4k  1/5.8/8   2  29  0.3
+  122 001 012f 1   6  1  3.2    2    6   344 1 11.4  5.5 1.0 16.7    5    2 1.14k  1/6.1/8   3  29  0.3
+  122 001 012f 1   6  1  3.2    6    5   108 1 20.4  9.9 1.0  6.3    5    2   968  1/6.0/8  -3  29  0.4
+  122 001 012f 1   6  1  3.0    3    4    80 1 20.4  7.0   -    -    0    0     0        -  -3  29    -
+               ----DL----------------------- ----UL----------------------------------------------------
+UE_ID  CL RNTI C cqi ri  mcs retx txok brate C  snr puc1  nl  mcs rxko rxok brate     #its phr  pl   ta
+  122 001 012f 1   7  1  3.0    7    4    80 1 20.4  7.2   -    -    0    0     0        -  -3  29    -
+  122 001 012f 1   6  1  3.6    9    7   556 1 23.4  7.8 1.0 12.0    5    2   732  1/6.1/8   0  30  0.4
+
+(enb)
+(enb)
+(enb)
+[ bs-isp4-01:root ][                         0 MME_450  [1 ENB_450]  3 IMS_450                          ][ 27/06/25 12:00 ]
