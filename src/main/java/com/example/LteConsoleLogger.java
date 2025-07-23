@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class LteConsoleLogger {
@@ -74,20 +74,20 @@ public class LteConsoleLogger {
 
             // Проверяем разделители для определения типа данных
             if (line.equals(T_UE_DELIMITER)) {
-                setDataType("t_ue");
+                handleDelimiter("t_ue");
                 return;
             } else if (line.equals(T_G_DELIMITER)) {
-                setDataType("t_g");
+                handleDelimiter("t_g");
                 return;
             } else if (line.equals(T_CPU_DELIMITER)) {
-                setDataType("t_cpu");
+                handleDelimiter("t_cpu");
                 return;
             } else if (line.equals(T_SPL_DELIMITER)) {
-                setDataType("t_spl");
+                handleDelimiter("t_spl");
                 return;
             }
 
-            if (inTable) {
+            if (inTable && dataType != null) {
                 // Обработка заголовков
                 if (isHeaderLine(line)) {
                     headers = parseHeaders(line);
@@ -105,19 +105,15 @@ public class LteConsoleLogger {
             }
         }
 
-        private void setDataType(String type) {
-            // Если тип данных изменился, записываем накопленные данные
-            if (dataType != null && !dataType.equals(type) && !tableBuffer.isEmpty() && headers != null) {
-                writeToCsv(headers, tableBuffer);
-                tableBuffer.clear();
+        private void handleDelimiter(String type) {
+            // Если есть накопленные данные, записываем их перед началом нового блока
+            if (inTable && headers != null && !tableBuffer.isEmpty()) {
+                writeToCsv();
             }
-            // Если тот же тип данных, просто очищаем буфер для нового блока
-            else if (dataType != null && dataType.equals(type) && !tableBuffer.isEmpty() && headers != null) {
-                writeToCsv(headers, tableBuffer);
-                tableBuffer.clear();
-            }
-            inTable = true;
+            // Устанавливаем новый тип данных
             dataType = type;
+            inTable = true;
+            // Не сбрасываем headers, чтобы сохранить их для следующего блока того же типа
         }
 
         private boolean isHeaderLine(String line) {
@@ -147,15 +143,15 @@ public class LteConsoleLogger {
             return row.size() == expectedColumns ? row : null;
         }
 
-        private void writeToCsv(List<String> headers, List<List<String>> dataRows) {
-            if (dataType == null) {
+        private void writeToCsv() {
+            if (dataType == null || tableBuffer.isEmpty()) {
                 return;
             }
             CSVWriter writer = writers.get(dataType);
             if (writer == null) {
                 return;
             }
-            for (List<String> row : dataRows) {
+            for (List<String> row : tableBuffer) {
                 writer.writeNext(row.toArray(new String[0]));
             }
             try {
@@ -163,6 +159,7 @@ public class LteConsoleLogger {
             } catch (IOException e) {
                 System.err.println("Error flushing CSV writer: " + e.getMessage());
             }
+            tableBuffer.clear(); // Очищаем буфер после записи
         }
 
         private void initializeCsvWriter(List<String> headers) {
@@ -184,7 +181,7 @@ public class LteConsoleLogger {
         }
 
         private String getCsvFileName() {
-            return dataType != null ? dataType + "_metrics.csv" : "unknown_metrics.csv";
+            return dataType != null ? dataType + ".csv" : "unknown.csv";
         }
     }
 }
