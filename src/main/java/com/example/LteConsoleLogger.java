@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class LteConsoleLogger {
     private static final Map<String, CSVWriter> writers = new HashMap<>();
@@ -60,7 +59,6 @@ public class LteConsoleLogger {
         private List<String> headers = null;
         private List<List<String>> tableBuffer = new ArrayList<>();
         private boolean inTable = false;
-        private String currentDelimiter = null;
         private String dataType = null;
 
         public void processLine(String line) {
@@ -74,18 +72,18 @@ public class LteConsoleLogger {
                 return;
             }
 
-            // Определяем тип данных по разделителю
+            // Проверяем разделители для определения типа данных
             if (line.equals(T_UE_DELIMITER)) {
-                setDataType("t_ue", T_UE_DELIMITER);
+                setDataType("t_ue");
                 return;
             } else if (line.equals(T_G_DELIMITER)) {
-                setDataType("t_g", T_G_DELIMITER);
+                setDataType("t_g");
                 return;
             } else if (line.equals(T_CPU_DELIMITER)) {
-                setDataType("t_cpu", T_CPU_DELIMITER);
+                setDataType("t_cpu");
                 return;
             } else if (line.equals(T_SPL_DELIMITER)) {
-                setDataType("t_spl", T_SPL_DELIMITER);
+                setDataType("t_spl");
                 return;
             }
 
@@ -107,19 +105,22 @@ public class LteConsoleLogger {
             }
         }
 
-        private void setDataType(String type, String delimiter) {
-            if (inTable && !tableBuffer.isEmpty() && headers != null) {
+        private void setDataType(String type) {
+            // Если тип данных изменился, записываем накопленные данные
+            if (dataType != null && !dataType.equals(type) && !tableBuffer.isEmpty() && headers != null) {
+                writeToCsv(headers, tableBuffer);
+                tableBuffer.clear();
+            }
+            // Если тот же тип данных, просто очищаем буфер для нового блока
+            else if (dataType != null && dataType.equals(type) && !tableBuffer.isEmpty() && headers != null) {
                 writeToCsv(headers, tableBuffer);
                 tableBuffer.clear();
             }
             inTable = true;
-            currentDelimiter = delimiter;
             dataType = type;
-            headers = null; // Сбрасываем заголовки для нового блока
         }
 
         private boolean isHeaderLine(String line) {
-            // Проверяем начало строки на наличие ключевых слов заголовков
             return line.trim().startsWith("UE_ID") || // t ue
                    line.trim().startsWith("conn") || // t g
                    line.trim().startsWith("CPU") ||  // t cpu
@@ -127,7 +128,6 @@ public class LteConsoleLogger {
         }
 
         private boolean isDataLine(String line) {
-            // Проверяем, является ли строка данными (начинается с числа или процента для t cpu)
             return line.trim().matches("^\\s*\\d+\\s+.*") || // t ue, t g
                    line.trim().matches("^\\s*\\d+\\.\\d+%\\s+.*") || // t cpu
                    line.trim().matches("^\\s*-?\\d+\\.\\d+\\s+.*"); // t spl
@@ -148,8 +148,10 @@ public class LteConsoleLogger {
         }
 
         private void writeToCsv(List<String> headers, List<List<String>> dataRows) {
-            String headersKey = getHeadersKey(headers);
-            CSVWriter writer = writers.get(headersKey);
+            if (dataType == null) {
+                return;
+            }
+            CSVWriter writer = writers.get(dataType);
             if (writer == null) {
                 return;
             }
@@ -164,31 +166,25 @@ public class LteConsoleLogger {
         }
 
         private void initializeCsvWriter(List<String> headers) {
-            String headersKey = getHeadersKey(headers);
-            if (!writers.containsKey(headersKey)) {
-                String csvFilePath = getCsvFileName(headers);
-                File csvFile = new File(csvFilePath);
-                try {
-                    CSVWriter writer = new CSVWriter(new FileWriter(csvFile, true));
-                    if (csvFile.length() == 0) {
-                        writer.writeNext(headers.toArray(new String[0]));
-                        writer.flush();
-                    }
-                    writers.put(headersKey, writer);
-                } catch (IOException e) {
-                    System.err.println("Error initializing CSV writer: " + e.getMessage());
+            if (dataType == null || writers.containsKey(dataType)) {
+                return;
+            }
+            String csvFilePath = getCsvFileName();
+            File csvFile = new File(csvFilePath);
+            try {
+                CSVWriter writer = new CSVWriter(new FileWriter(csvFile, true));
+                if (csvFile.length() == 0) {
+                    writer.writeNext(headers.toArray(new String[0]));
+                    writer.flush();
                 }
+                writers.put(dataType, writer);
+            } catch (IOException e) {
+                System.err.println("Error initializing CSV writer: " + e.getMessage());
             }
         }
 
-        private String getHeadersKey(List<String> headers) {
-            return headers.stream().collect(Collectors.joining(","));
-        }
-
-        private String getCsvFileName(List<String> headers) {
-            String headersKey = getHeadersKey(headers);
-            // Используем dataType для создания осмысленного имени файла
-            return String.format("%s_metrics_%d.csv", dataType != null ? dataType : "unknown", headersKey.hashCode());
+        private String getCsvFileName() {
+            return dataType != null ? dataType + "_metrics.csv" : "unknown_metrics.csv";
         }
     }
 }
