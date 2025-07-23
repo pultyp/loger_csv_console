@@ -14,8 +14,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LteConsoleLogger {
-    private static final String TABLE_DELIMITER = "----DL----------------------- ----UL----------------------------------------------------";
     private static final Map<String, CSVWriter> writers = new HashMap<>();
+
+    // Определяем разделители для разных типов данных
+    private static final String T_UE_DELIMITER = "----DL----------------------- ----UL----------------------------------------------------";
+    private static final String T_G_DELIMITER = "--#UE---------       --RRC------------ --DL------------- --UL------------- -RT--";
+    private static final String T_CPU_DELIMITER = "-Proc- --RX---------- --TX----------  --TX/RX diff (ms)--- --Err----";
+    private static final String T_SPL_DELIMITER = "--P0/TX 1-- dBFS --P0/RX 1--";
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -32,7 +37,7 @@ public class LteConsoleLogger {
                     processor.processLine(line);
                 }
             };
-            Tailer tailer = new Tailer(new File(logFilePath), listener, 1000, true); // true — читать с начала файла
+            Tailer tailer = new Tailer(new File(logFilePath), listener, 1000, true);
             new Thread(tailer).start();
         }
 
@@ -55,6 +60,8 @@ public class LteConsoleLogger {
         private List<String> headers = null;
         private List<List<String>> tableBuffer = new ArrayList<>();
         private boolean inTable = false;
+        private String currentDelimiter = null;
+        private String dataType = null;
 
         public void processLine(String line) {
             line = line.trim();
@@ -62,13 +69,23 @@ public class LteConsoleLogger {
                 return;
             }
 
-            // Начало или конец таблицы
-            if (line.equals(TABLE_DELIMITER)) {
-                if (inTable && !tableBuffer.isEmpty() && headers != null) {
-                    writeToCsv(headers, tableBuffer);
-                    tableBuffer.clear();
-                }
-                inTable = true;
+            // Игнорируем строки PRACH
+            if (line.startsWith("PRACH:")) {
+                return;
+            }
+
+            // Определяем тип данных по разделителю
+            if (line.equals(T_UE_DELIMITER)) {
+                setDataType("t_ue", T_UE_DELIMITER);
+                return;
+            } else if (line.equals(T_G_DELIMITER)) {
+                setDataType("t_g", T_G_DELIMITER);
+                return;
+            } else if (line.equals(T_CPU_DELIMITER)) {
+                setDataType("t_cpu", T_CPU_DELIMITER);
+                return;
+            } else if (line.equals(T_SPL_DELIMITER)) {
+                setDataType("t_spl", T_SPL_DELIMITER);
                 return;
             }
 
@@ -90,12 +107,30 @@ public class LteConsoleLogger {
             }
         }
 
+        private void setDataType(String type, String delimiter) {
+            if (inTable && !tableBuffer.isEmpty() && headers != null) {
+                writeToCsv(headers, tableBuffer);
+                tableBuffer.clear();
+            }
+            inTable = true;
+            currentDelimiter = delimiter;
+            dataType = type;
+            headers = null; // Сбрасываем заголовки для нового блока
+        }
+
         private boolean isHeaderLine(String line) {
-            return line.trim().startsWith("UE_ID");
+            // Проверяем начало строки на наличие ключевых слов заголовков
+            return line.trim().startsWith("UE_ID") || // t ue
+                   line.trim().startsWith("conn") || // t g
+                   line.trim().startsWith("CPU") ||  // t cpu
+                   line.trim().startsWith("RMS");    // t spl
         }
 
         private boolean isDataLine(String line) {
-            return line.trim().matches("^\\s*\\d+\\s+.*");
+            // Проверяем, является ли строка данными (начинается с числа или процента для t cpu)
+            return line.trim().matches("^\\s*\\d+\\s+.*") || // t ue, t g
+                   line.trim().matches("^\\s*\\d+\\.\\d+%\\s+.*") || // t cpu
+                   line.trim().matches("^\\s*-?\\d+\\.\\d+\\s+.*"); // t spl
         }
 
         private List<String> parseHeaders(String headerLine) {
@@ -152,7 +187,8 @@ public class LteConsoleLogger {
 
         private String getCsvFileName(List<String> headers) {
             String headersKey = getHeadersKey(headers);
-            return "lte_metrics_" + headersKey.hashCode() + ".csv";
+            // Используем dataType для создания осмысленного имени файла
+            return String.format("%s_metrics_%d.csv", dataType != null ? dataType : "unknown", headersKey.hashCode());
         }
     }
 }
