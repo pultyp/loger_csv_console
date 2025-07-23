@@ -67,8 +67,12 @@ public class LteConsoleLogger {
                 return;
             }
 
-            // Игнорируем строки PRACH
-            if (line.startsWith("PRACH:")) {
+            // Игнорируем строки PRACH и сообщения терминала
+            if (line.startsWith("PRACH:") || 
+                line.contains(": command not found") || 
+                line.startsWith("bash:") || 
+                line.startsWith("Command '") || 
+                line.startsWith("See 'snap info")) {
                 return;
             }
 
@@ -91,7 +95,7 @@ public class LteConsoleLogger {
                 // Обработка заголовков
                 if (isHeaderLine(line)) {
                     headers = parseHeaders(line);
-                    initializeCsvWriter(headers);
+                    initializeCsvWriter();
                     return;
                 }
 
@@ -106,14 +110,17 @@ public class LteConsoleLogger {
         }
 
         private void handleDelimiter(String type) {
-            // Если есть накопленные данные, записываем их перед началом нового блока
-            if (inTable && headers != null && !tableBuffer.isEmpty()) {
+            // Записываем накопленные данные, если тип данных меняется
+            if (dataType != null && !dataType.equals(type) && !tableBuffer.isEmpty()) {
                 writeToCsv();
             }
-            // Устанавливаем новый тип данных
+            // Очищаем заголовки и буфер при смене типа данных
+            if (!type.equals(dataType)) {
+                headers = null;
+                tableBuffer.clear();
+            }
             dataType = type;
             inTable = true;
-            // Не сбрасываем headers, чтобы сохранить их для следующего блока того же типа
         }
 
         private boolean isHeaderLine(String line) {
@@ -144,7 +151,7 @@ public class LteConsoleLogger {
         }
 
         private void writeToCsv() {
-            if (dataType == null || tableBuffer.isEmpty()) {
+            if (dataType == null || tableBuffer.isEmpty() || headers == null) {
                 return;
             }
             CSVWriter writer = writers.get(dataType);
@@ -162,8 +169,8 @@ public class LteConsoleLogger {
             tableBuffer.clear(); // Очищаем буфер после записи
         }
 
-        private void initializeCsvWriter(List<String> headers) {
-            if (dataType == null || writers.containsKey(dataType)) {
+        private void initializeCsvWriter() {
+            if (dataType == null || headers == null || writers.containsKey(dataType)) {
                 return;
             }
             String csvFilePath = getCsvFileName();
