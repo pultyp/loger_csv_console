@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class LteConsoleLogger {
     private static final Map<String, CSVWriter> writers = new HashMap<>();
+    private static final Map<String, List<String>> headersMap = new HashMap<>();
 
     // Определяем разделители для разных типов данных
     private static final String T_UE_DELIMITER = "----DL----------------------- ----UL----------------------------------------------------";
@@ -56,10 +57,8 @@ public class LteConsoleLogger {
     }
 
     private static class LogProcessor {
-        private List<String> headers = null;
-        private List<List<String>> tableBuffer = new ArrayList<>();
-        private boolean inTable = false;
         private String dataType = null;
+        private List<String> headers = null;
 
         public void processLine(String line) {
             line = line.trim();
@@ -87,10 +86,11 @@ public class LteConsoleLogger {
                 return;
             }
 
-            if (inTable && dataType != null) {
+            if (dataType != null) {
                 // Обработка заголовков
                 if (isHeaderLine(line)) {
                     headers = parseHeaders(line);
+                    headersMap.put(dataType, headers);
                     initializeCsvWriter(headers);
                     return;
                 }
@@ -99,19 +99,15 @@ public class LteConsoleLogger {
                 if (isDataLine(line) && headers != null) {
                     List<String> row = parseDataRow(line, headers.size());
                     if (row != null && row.size() == headers.size()) {
-                        tableBuffer.add(row);
+                        writeToCsv(row);
                     }
                 }
             }
         }
 
         private void setDataType(String type) {
-            if (dataType != null && !dataType.equals(type) && !tableBuffer.isEmpty()) {
-                writeToCsv();
-                tableBuffer.clear();
-            }
             dataType = type;
-            inTable = true;
+            headers = headersMap.get(type);
         }
 
         private boolean isHeaderLine(String line) {
@@ -141,17 +137,15 @@ public class LteConsoleLogger {
             return row.size() == expectedColumns ? row : null;
         }
 
-        private void writeToCsv() {
-            if (dataType == null || tableBuffer.isEmpty()) {
+        private void writeToCsv(List<String> row) {
+            if (dataType == null) {
                 return;
             }
             CSVWriter writer = writers.get(dataType);
             if (writer == null) {
                 return;
             }
-            for (List<String> row : tableBuffer) {
-                writer.writeNext(row.toArray(new String[0]));
-            }
+            writer.writeNext(row.toArray(new String[0]));
             try {
                 writer.flush();
             } catch (IOException e) {
