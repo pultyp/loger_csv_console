@@ -8,13 +8,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LteConsoleLogger {
     private static final Map<String, CSVWriter> writers = new HashMap<>();
+
+    // Определяем разделители для разных типов данных
     private static final String T_UE_DELIMITER = "----DL----------------------- ----UL----------------------------------------------------";
+    private static final String T_G_DELIMITER = "--#UE---------       --RRC------------ --DL------------- --UL------------- -RT--";
+    private static final String T_CPU_DELIMITER = "-Proc- --RX---------- --TX----------  --TX/RX diff (ms)--- --Err----";
+    private static final String T_SPL_DELIMITER = "--P0/TX 1-- dBFS --P0/RX 1--";
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -22,6 +27,7 @@ public class LteConsoleLogger {
             System.exit(1);
         }
 
+        // Запускаем Tailer для каждого лог-файла
         for (String logFilePath : args) {
             LogProcessor processor = new LogProcessor();
             TailerListenerAdapter listener = new TailerListenerAdapter() {
@@ -29,28 +35,13 @@ public class LteConsoleLogger {
                 public void handle(String line) {
                     processor.processLine(line);
                 }
-
-                @Override
-                public void fileNotFound() {
-                    System.err.println("File not found: " + logFilePath);
-                }
-
-                @Override
-                public void handle(Exception ex) {
-                    System.err.println("Error in Tailer: " + ex.getMessage());
-                    processor.flushPendingData(); // Запись данных при ошибке
-                }
             };
             Tailer tailer = new Tailer(new File(logFilePath), listener, 1000, true);
-            Thread thread = new Thread(tailer);
-            thread.start();
-
-            // Добавляем обработку завершения
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                processor.flushPendingData();
-                closeWriters();
-            }));
+            new Thread(tailer).start();
         }
+
+        // Закрытие писателей при завершении программы
+        Runtime.getRuntime().addShutdownHook(new Thread(LteConsoleLogger::closeWriters));
     }
 
     private static void closeWriters() {
@@ -68,7 +59,6 @@ public class LteConsoleLogger {
         private List<String> headers = null;
         private List<List<String>> tableBuffer = new ArrayList<>();
         private boolean inTable = false;
-        private boolean inDataBlock = false;
         private String dataType = null;
 
         public void processLine(String line) {
@@ -77,31 +67,36 @@ public class LteConsoleLogger {
                 return;
             }
 
-            // Игнорируем лишние строки
-            if (line.startsWith("PRACH:") || line.startsWith("Press [return] to stop the trace") || 
-                line.startsWith("(enb) t")) {
-                if (inDataBlock && !tableBuffer.isEmpty()) {
-                    writeToCsv(); // Записываем данные перед выходом из блока
-                    inDataBlock = false;
-                }
+            // Игнорируем строки PRACH и другие нерелевантные строки
+            if (line.startsWith("PRACH:") || line.startsWith("Press [return] to stop the trace") || line.startsWith("(enb) t")) {
                 return;
             }
 
-            // Обработка разделителя
+            // Проверяем разделители для определения типа данных
             if (line.equals(T_UE_DELIMITER)) {
-                handleDelimiter("t_ue");
+                setDataType("t_ue");
+                return;
+            } else if (line.equals(T_G_DELIMITER)) {
+                setDataType("t_g");
+                return;
+            } else if (line.equals(T_CPU_DELIMITER)) {
+                setDataType("t_cpu");
+                return;
+            } else if (line.equals(T_SPL_DELIMITER)) {
+                setDataType("t_spl");
                 return;
             }
 
             if (inTable && dataType != null) {
+                // Обработка заголовков
                 if (isHeaderLine(line)) {
                     headers = parseHeaders(line);
-                    initializeCsvWriter();
-                    inDataBlock = true;
+                    initializeCsvWriter(headers);
                     return;
                 }
 
-                if (inDataBlock && isDataLine(line) && headers != null) {
+                // Обработка строк данных
+                if (isDataLine(line) && headers != null) {
                     List<String> row = parseDataRow(line, headers.size());
                     if (row != null && row.size() == headers.size()) {
                         tableBuffer.add(row);
@@ -110,25 +105,26 @@ public class LteConsoleLogger {
             }
         }
 
-        private void handleDelimiter(String type) {
-            if (inDataBlock && !tableBuffer.isEmpty()) {
+        private void setDataType(String type) {
+            if (dataType != null && !dataType.equals(type) && !tableBuffer.isEmpty()) {
                 writeToCsv();
-            }
-            if (!type.equals(dataType)) {
-                headers = null;
                 tableBuffer.clear();
-                inDataBlock = false;
             }
             dataType = type;
             inTable = true;
         }
 
         private boolean isHeaderLine(String line) {
-            return line.trim().startsWith("UE_ID");
+            return line.trim().startsWith("UE_ID") || // t_ue
+                   line.trim().startsWith("conn") || // t_g
+                   line.trim().startsWith("CPU") ||  // t_cpu
+                   line.trim().startsWith("RMS");    // t_spl
         }
 
         private boolean isDataLine(String line) {
-            return line.trim().matches("^\\s*\\d+\\s+\\d+\\s+[0-9a-fA-F]+\\s+.*");
+            return line.trim().matches("^\\s*\\d+\\s+.*") || // t_ue, t_g
+                   line.trim().matches("^\\s*\\d+\\.\\d+%\\s+.*") || // t_cpu
+                   line.trim().matches("^\\s*-?\\d+\\.\\d+\\s+.*"); // t_spl
         }
 
         private List<String> parseHeaders(String headerLine) {
@@ -146,7 +142,7 @@ public class LteConsoleLogger {
         }
 
         private void writeToCsv() {
-            if (dataType == null || tableBuffer.isEmpty() || headers == null) {
+            if (dataType == null || tableBuffer.isEmpty()) {
                 return;
             }
             CSVWriter writer = writers.get(dataType);
@@ -161,11 +157,10 @@ public class LteConsoleLogger {
             } catch (IOException e) {
                 System.err.println("Error flushing CSV writer: " + e.getMessage());
             }
-            tableBuffer.clear();
         }
 
-        private void initializeCsvWriter() {
-            if (dataType == null || headers == null || writers.containsKey(dataType)) {
+        private void initializeCsvWriter(List<String> headers) {
+            if (dataType == null || writers.containsKey(dataType)) {
                 return;
             }
             String csvFilePath = dataType + ".csv";
@@ -179,12 +174,6 @@ public class LteConsoleLogger {
                 writers.put(dataType, writer);
             } catch (IOException e) {
                 System.err.println("Error initializing CSV writer: " + e.getMessage());
-            }
-        }
-
-        public void flushPendingData() {
-            if (!tableBuffer.isEmpty()) {
-                writeToCsv();
             }
         }
     }
